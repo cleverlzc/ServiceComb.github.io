@@ -45,7 +45,7 @@ Walk through [Develop microservice application in minutes](/docs/quick-start-bmi
 The above configurations have already set up in the code. All you need to do is to restart the *BMI calculator services* with the following command:
 
 ```bash
-mvn spring-boot:run -Pbizkeeper -Drun.jvmArguments="-Dcse.handler.chain.Provider.default=bizkeeper-provider -Dcse.circuitBreaker.Provider.calculator.requestVolumeThreshold=3 -Dcse.fallbackpolicy.Provider.policy=returnnull"
+mvn spring-boot:run -Drun.jvmArguments="-Dcse.handler.chain.Provider.default=bizkeeper-provider -Dcse.circuitBreaker.Provider.calculator.requestVolumeThreshold=3 -Dcse.fallbackpolicy.Provider.policy=returnnull"
 ```
 
 ## Verification
@@ -64,4 +64,4 @@ fig-1 Service management result
 
 * See quick start for [Distributed Tracing](/docs/quick-start-advance/distributed-tracing/)
 
-* Learn more about [Service Management](/users/service-management/)
+* Learn more about [Service Management](/users/service-configurations/)

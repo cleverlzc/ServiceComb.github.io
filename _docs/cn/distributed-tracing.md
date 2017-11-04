@@ -40,10 +40,6 @@ last_modified_at: 2017-09-03T10:01:43-04:00
    ```xml
        <dependency>
          <groupId>io.servicecomb</groupId>
-         <artifactId>handler-tracing-zipkin</artifactId>
-       </dependency>
-       <dependency>
-         <groupId>io.servicecomb</groupId>
          <artifactId>spring-cloud-zuul-zipkin</artifactId>
        </dependency>
    ```
@@ -59,13 +55,13 @@ last_modified_at: 2017-09-03T10:01:43-04:00
 2. 重启 *体质指数计算器* 微服务：
 
    ```bash
-   mvn spring-boot:run -Ptracing -Drun.jvmArguments="-Dcse.handler.chain.Provider.default=tracing-provider"
+   mvn spring-boot:run -Drun.jvmArguments="-Dcse.handler.chain.Provider.default=tracing-provider"
    ```
    
 3. 重启 *体质指数界面* 微服务：
 
    ```bash
-   mvn spring-boot:run -Ptracing
+   mvn spring-boot:run -Drun.jvmArguments="-Dservicecomb.tracing.enabled=true"
    ```
 
 ## 验证
@@ -78,8 +74,10 @@ last_modified_at: 2017-09-03T10:01:43-04:00
 
 ## 下一步
 
+* 了解更多[分布式调用链追踪](/cn/users/distributed-tracing/)
+
 * 阅读[基于 ServiceComb 和 Zipkin 的分布式调用链追踪](/cn/docs/tracing-with-servicecomb/)来进一步了解分布式追踪 
 
-* 认识 [**ServiceComb** 微服务开发框架](http://servicecomb.io/cn/users/user-guide/)
+* 认识 [**ServiceComb** 微服务开发框架](/cn/users/)
 
-* 通过 [Company应用](http://servicecomb.io/cn/docs/linuxcon-workshop-demo/) 更深入地了解微服务开发
+* 通过 [Company应用](/cn/docs/linuxcon-workshop-demo/) 更深入地了解微服务开发

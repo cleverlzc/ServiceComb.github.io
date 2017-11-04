@@ -6,6 +6,7 @@ permalink: /cn/docs/distributed_saga_3/
 excerpt: "Saga和其他数据一致性解决方案相比有什么不同之处？"
 last_modified_at: 2017-09-18T15:22:00+08:00
 author: Sean Yin
+tags: [事务一致性]
 redirect_from:
   - /theme-setup/
 ---
@@ -69,8 +70,8 @@ TCC的缺点是其两阶段协议需要设计额外的服务待处理状态，�
 
 ![event driven architecture - response]({{ site.url }}{{ site.baseurl }}/assets/images/saga.event.driven.response.png){: .align-center}
 
-如果仔细比较，事件驱动的架构就像非集中式的基于事件的TCC实现。去中心化能达到服务自治，但也造成了服务之间更紧密的的耦合。
-假设新的业务需求在服务B和C之间的增加了新的流程D。在事件驱动架构下，服务B和C必须改动代码以适应新的流程D。
+如果仔细比较，事件驱动的架构就像非集中式的基于事件的TCC实现。如果去掉待处理状态而直接把服务记录设为最终状态，这个架构就像非集中式的基于事件的saga实现。
+去中心化能达到服务自治，但也造成了服务之间更紧密的的耦合。假设新的业务需求在服务B和C之间的增加了新的流程D。在事件驱动架构下，服务B和C必须改动代码以适应新的流程D。
 
 ![event driven architecture - coupling]({{ site.url }}{{ site.baseurl }}/assets/images/saga.event.coupling.png){: .align-center}
 
@@ -89,7 +90,10 @@ Saga则正好相反，所有这些耦合都在saga系统中，当在长活事务
 
 ![decentralized saga]({{ site.url }}{{ site.baseurl }}/assets/images/saga.decentralized.png){: .align-center}
 
-与集中式相比，非集中式的实现具有服务自主的优势。但每个服务都需要包含数据一致性协议，并提供其所需的额外持久化设施。
+与集中式相比，非集中式的实现具有服务自治的优势。但每个服务都需要包含数据一致性协议，并提供其所需的额外持久化设施。
+
+我们更倾向于自治的业务服务，但服务还关联很多应用的复杂性，如数据一致性，服务监控和消息传递，
+将这些棘手问题集中处理，能将业务服务从应用的复杂性中释放，专注于处理复杂的业务，因此我们采用了集中式的saga设计。
 
 另外，随着长活事务中涉及的服务数量增长，服务之间的关系变得越来越难理解，很快便会呈现下图的死星形状。
 
@@ -105,11 +109,11 @@ Saga则正好相反，所有这些耦合都在saga系统中，当在长活事务
 并使排查事务中的问题更容易。
 
 ## References
-1. [Original Paper on Sagas][1] by By Hector Garcia-Molina & Kenneth Salem
 1. [https://en.wikipedia.org/wiki/Two-phase_commit_protocol](https://en.wikipedia.org/wiki/Two-phase_commit_protocol)
 1. [https://cs.nyu.edu/courses/spring03/G22.2631-001/lecture8.pdf](https://cs.nyu.edu/courses/spring03/G22.2631-001/lecture8.pdf)
 1. [http://courses.cs.vt.edu/~cs5204/fall00/distributedDBMS/duckett/tpcp.html](http://courses.cs.vt.edu/~cs5204/fall00/distributedDBMS/duckett/tpcp.html)
 1. [https://www.infoq.com/presentations/Transactions-HTTP-REST](https://www.infoq.com/presentations/Transactions-HTTP-REST)
+1. [https://www.nginx.com/blog/event-driven-data-management-microservices/](https://www.nginx.com/blog/event-driven-data-management-microservices/)
 
 [1]:https://en.wikipedia.org/wiki/Two-phase_commit_protocol
 [2]:https://cs.nyu.edu/courses/spring03/G22.2631-001/lecture8.pdf

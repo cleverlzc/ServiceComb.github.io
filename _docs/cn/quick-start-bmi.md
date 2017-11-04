@@ -39,6 +39,9 @@ public interface CalculatorService {
 public class CalculatorServiceImpl implements CalculatorService {
   @Override
   public double calculate(double height, double weight) {
+    if (height <= 0 || weight <= 0) {
+      throw new IllegalArgumentException("Arguments must be above 0");
+    }
     double heightInMeter = height / 100;
     return weight / (heightInMeter * heightInMeter);
   }
@@ -63,7 +66,6 @@ public interface CalculatorEndpoint {
 ```java
 @RestSchema(schemaId = "calculatorRestEndpoint")
 @RequestMapping("/")
-@Controller
 public class CalculatorRestEndpoint implements CalculatorEndpoint {
 
   private final CalculatorService calculatorService;
@@ -74,13 +76,16 @@ public class CalculatorRestEndpoint implements CalculatorEndpoint {
   }
 
   @Override
-  @RequestMapping(value = "/bmi", method = RequestMethod.GET)
-  @ResponseBody
+  @GetMapping("/bmi")
   public double calculate(double height, double weight) {
     return calculatorService.calculate(height, weight);
   }
 }
 ```
+
+ServiceComb从0.3.0版本之后提供了对SpringMvc中简化注解(即`GetMapping`等)的支持。
+{: .notice--info}
+
 这里用`@RestSchema`注释端点后， **ServiceComb** 微服务框架会自动生成对应的服务端点契约，并根据
 如下的 `microservice.yaml` 文件中的定义来配置端点端口，将契约和服务一起注册到服务注册中心。
 ```yaml
@@ -128,7 +133,19 @@ public class CalculatorApplication {
       <groupId>io.servicecomb</groupId>
       <artifactId>spring-boot-starter-discovery</artifactId>
     </dependency>
+    <dependency>
+      <groupId>io.servicecomb</groupId>
+      <artifactId>spring-boot-starter-servicecomb</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.servicecomb</groupId>
+      <artifactId>spring-cloud-zuul</artifactId>
+    </dependency>
 ```
+
+ServiceComb从0.4.0-SNAPSHOT版本之后新增了`spring-cloud-zuul`模块使能提供对zuul的兼容。
+{: .notice--info}
+
 在 `application.yaml` 文件中配置路由规则及服务端口信息：
 ```yaml
 zuul:

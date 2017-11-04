@@ -16,30 +16,7 @@ Walk through [Develop microservice application in minutes](/docs/quick-start-bmi
 
 ## Enable
 
-1. Add load balance dependency in `pom.xml` of *BMI web service*:
-
-   ```xml
-   <dependency>
-      <groupId>io.servicecomb</groupId>
-      <artifactId>handler-loadbalance</artifactId>
-    </dependency>
-   ```
-   
-2. Add handler chain of load balance in `microservice.yaml` of *BMI web service*:
-
-   ```yaml
-   cse:
-     handler:
-       chain:
-         Consumer:
-           default: loadbalance
-   ```
-
-The above configurations have already set up in the code. All you need to do is restart the **BMI web services** with the following command:
-
-```bash
-mvn spring-boot:run -Ploadbalance -Drun.jvmArguments="-Dcse.handler.chain.Provider.default=loadbalance"
-```
+The simple embedded load balancer will be used by default. No extra configurations needed.
 
 ## Verification
 
@@ -58,4 +35,4 @@ Now you can see the following figures shows up alternately by clicking the *Subm
 
 * See quick start for [Flow Control](/docs/quick-start-advance/flow-control/)
 
-* Learn more about [Load Balance](/users/load-balance/)
+* Learn more about [Load Balance](/users/service-configurations/#负载均衡策略)

@@ -40,6 +40,9 @@ public interface CalculatorService {
 public class CalculatorServiceImpl implements CalculatorService {
   @Override
   public double calculate(double height, double weight) {
+    if (height <= 0 || weight <= 0) {
+      throw new IllegalArgumentException("Arguments must be above 0");
+    }
     double heightInMeter = height / 100;
     return weight / (heightInMeter * heightInMeter);
   }
@@ -64,7 +67,6 @@ Expose calculator service's restful endpoint:
 ```java
 @RestSchema(schemaId = "calculatorRestEndpoint")
 @RequestMapping("/")
-@Controller
 public class CalculatorRestEndpoint implements CalculatorEndpoint {
 
   private final CalculatorService calculatorService;
@@ -75,13 +77,16 @@ public class CalculatorRestEndpoint implements CalculatorEndpoint {
   }
 
   @Override
-  @RequestMapping(value = "/bmi", method = RequestMethod.GET)
-  @ResponseBody
+  @GetMapping("/bmi")
   public double calculate(double height, double weight) {
     return calculatorService.calculate(height, weight);
   }
 }
 ```
+
+ServiceComb supports SpringMvc simplified annotations, e.g. `GetMapping`, since version 0.3.0.
+{: .notice--info}
+
 Note that ServiceComb can auto-generate service contract when annotating endpoints with `@RestSchema`. Then configure the endpoint in  `microservice.yaml` as follows to register the contact and microservice to service center.
 ```yaml
 APPLICATION_ID: bmi
@@ -128,7 +133,19 @@ Introduce ServiceComb dependency:
       <groupId>io.servicecomb</groupId>
       <artifactId>spring-boot-starter-discovery</artifactId>
     </dependency>
+    <dependency>
+      <groupId>io.servicecomb</groupId>
+      <artifactId>spring-boot-starter-servicecomb</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.servicecomb</groupId>
+      <artifactId>spring-cloud-zuul</artifactId>
+    </dependency>
 ```
+
+ServiceComb added `spring-cloud-zuul` module to provide better compatibility with zuul since version 0.4.0-SNAPSHOT.
+{: .notice--info}
+
 Configure routing rules and service endpoint in `application.yaml`.
 ```yaml
 zuul:

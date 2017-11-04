@@ -43,7 +43,7 @@ Walk through [Develop microservice application in minutes](/docs/quick-start-bmi
 The above configurations have already set up in the code. All you need to do is to stop all **BMI calculator services** and then start a new one with the following command:
 
 ```bash
-mvn spring-boot:run -Pflowcontrol -Drun.jvmArguments="-Dcse.handler.chain.Provider.default=qps-flowcontrol-provider -Dcse.flowcontrol.Provider.qps.limit.gateway=1"
+mvn spring-boot:run -Drun.jvmArguments="-Dcse.handler.chain.Provider.default=qps-flowcontrol-provider -Dcse.flowcontrol.Provider.qps.limit.gateway=1"
 ```
 
 ## Verification
@@ -56,4 +56,4 @@ Visit <a>http://localhost:8888</a>. Input a positive height and weight and then 
 
 * See quick start for [Service Management](/docs/quick-start-advance/service-management/)
 
-* Learn more about [Flow Control](/users/qps/)
+* Learn more about [Flow Control](/users/service-configurations/#限流策略)

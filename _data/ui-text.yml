@@ -7,6 +7,7 @@ en: &DEFAULT_EN
   quick_start		     : "Quick Start"
   user_guide		     : "User Guide"
   blogs                      : "Blogs"
+  faqs                       : "FAQ"
   faq			     : "Common Questions"
   contribute		     : "Contribute"
   report_issue		     : "Report a Doc Issue"
@@ -15,6 +16,7 @@ en: &DEFAULT_EN
   community                  : "Community"
   user		    	     : "User"
   dev			     : "Dev"
+  slides                     : "Slides"
   page                       : "Page"
   pagination_previous        : "Previous"
   pagination_next            : "Next"
@@ -366,6 +368,7 @@ zh: &DEFAULT_ZH
   quick_start		     : "快速入门"
   user_guide		     : "用户指南"
   blogs                      : "博客"
+  faqs                       : "常见问题"
   faq			     : "常见问题"
   contribute		     : "贡献"
   report_issue		     : "报告本网页问题"
@@ -374,6 +377,7 @@ zh: &DEFAULT_ZH
   community                  : "社区"
   user			     : "用户"
   dev			     : "开发者"
+  slides                     : "资料"
 cn:
   <<: *DEFAULT_ZH
 zh-CN:
